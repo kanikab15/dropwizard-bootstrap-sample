@@ -3,13 +3,13 @@ database:
   driverClass: org.sqlite.JDBC
 
   # the username
-  user: dbadmin
+  user:
 
   # the password
-  password: toor
+  password:
 
   # the JDBC URL
-  url: jdbc:sqlite:memory
+  url: jdbc:sqlite:database.db
 
   # any properties specific to your JDBC driver:
   properties:
@@ -41,6 +41,10 @@ logging:
 
   # The default level of all loggers. Can be OFF, ERROR, WARN, INFO, DEBUG, TRACE, or ALL.
   level: ALL
+
+http:
+  rootPath: /service/*
+
 
 
 

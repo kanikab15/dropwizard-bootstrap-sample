@@ -1,14 +1,16 @@
 package com.github.stmishra.samples.service;
 
 
+import com.github.stmishra.samples.api.DropwizardBootstrapSampleResource;
+import com.github.stmishra.samples.configuration.DropwizardBootstrapConfiguration;
+import com.github.stmishra.samples.db.DropwizardBootstrapDAO;
 import com.yammer.dropwizard.Service;
 import com.yammer.dropwizard.assets.AssetsBundle;
 import com.yammer.dropwizard.config.Bootstrap;
 import com.yammer.dropwizard.config.Environment;
+import com.yammer.dropwizard.db.DatabaseConfiguration;
 import com.yammer.dropwizard.jdbi.DBIFactory;
-import com.github.stmishra.samples.api.DropwizardBootstrapSampleResource;
-import com.github.stmishra.samples.configuration.DropwizardBootstrapConfiguration;
-import com.github.stmishra.samples.db.DropwizardBootstrapDAO;
+import com.yammer.dropwizard.migrations.MigrationsBundle;
 import org.skife.jdbi.v2.DBI;
 
 
@@ -20,7 +22,13 @@ public class DropwizardBootstrapSample extends Service<DropwizardBootstrapConfig
     @Override
     public void initialize(Bootstrap<DropwizardBootstrapConfiguration> bootstrap) {
         bootstrap.setName("dropwizard-bootstrap-config");
-        bootstrap.addBundle(new AssetsBundle("/assets","/"));
+        bootstrap.addBundle(new AssetsBundle("/assets/app","/"));
+        bootstrap.addBundle(new MigrationsBundle<DropwizardBootstrapConfiguration>() {
+            @Override
+            public DatabaseConfiguration getDatabaseConfiguration(DropwizardBootstrapConfiguration configuration) {
+                return configuration.getDatabaseConfiguration();
+            }
+        });
     }
 
     @Override
@@ -29,6 +37,9 @@ public class DropwizardBootstrapSample extends Service<DropwizardBootstrapConfig
         final DBIFactory factory = new DBIFactory();
         final DBI jdbi = factory.build(environment, configuration.getDatabaseConfiguration(), "sqlite");
         final DropwizardBootstrapDAO dao = jdbi.onDemand(DropwizardBootstrapDAO.class);
+        //dao.createSampleTable();
+        dao.insertContent("santosh", "blah");
+
         environment.addResource(new DropwizardBootstrapSampleResource(dao));
 
     }
