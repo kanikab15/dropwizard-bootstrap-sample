@@ -6,4 +6,4 @@ class
 *.ear
 .idea
 *.iml
-src/main/resources/assets
+src/main/resources/assets/bower_components
