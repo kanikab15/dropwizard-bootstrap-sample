@@ -1,15 +1,17 @@
 package com.github.stmishra.samples.db;
 
 import org.skife.jdbi.v2.sqlobject.Bind;
+import org.skife.jdbi.v2.sqlobject.SqlQuery;
 import org.skife.jdbi.v2.sqlobject.SqlUpdate;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by santoshm1 on 6/2/14.
  */
 public interface DropwizardBootstrapDAO {
 
-    @SqlUpdate("create table sample (id int primary key, name varchar(100), create_date date, update_date date, content text)")
-    void createSampleTable();
 
 
 
@@ -25,7 +27,9 @@ public interface DropwizardBootstrapDAO {
     @SqlQuery("select * from sample where id = :id")
     ImmutableList<Map<String, Object>> fetchById(); */
 
-    @SqlUpdate("insert into sample (name, create_date, update_date, content) values( :name, date('now'), date('now'), :content) ")
-    void insertContent(@Bind("name") String name, @Bind("content") String content);
+    @SqlUpdate("insert into sample (title, create_date, update_date, content) values( :title, date('now'), date('now'), :content) ")
+    void insertContent(@Bind("title") String title, @Bind("content") String content);
 
+    @SqlQuery("select * from sample")
+    List<Map<String, Object>> getAll();
 }

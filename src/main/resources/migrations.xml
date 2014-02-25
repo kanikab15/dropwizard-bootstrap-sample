@@ -11,6 +11,8 @@
             <column name="id" type="int">
                 <constraints primaryKey="true"/>
             </column>
+            <column name="title" type="varchar(255)"/>
+
             <column name="content" type="text">
                 <constraints nullable="false"/>
             </column>

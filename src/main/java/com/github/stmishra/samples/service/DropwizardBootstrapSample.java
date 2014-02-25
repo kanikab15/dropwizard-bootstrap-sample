@@ -10,8 +10,11 @@ import com.yammer.dropwizard.config.Bootstrap;
 import com.yammer.dropwizard.config.Environment;
 import com.yammer.dropwizard.db.DatabaseConfiguration;
 import com.yammer.dropwizard.jdbi.DBIFactory;
+import com.yammer.dropwizard.jdbi.ImmutableListContainerFactory;
+import com.yammer.dropwizard.jdbi.ImmutableSetContainerFactory;
 import com.yammer.dropwizard.migrations.MigrationsBundle;
 import org.skife.jdbi.v2.DBI;
+import org.skife.jdbi.v2.DefaultMapper;
 
 
 public class DropwizardBootstrapSample extends Service<DropwizardBootstrapConfiguration> {
@@ -36,6 +39,9 @@ public class DropwizardBootstrapSample extends Service<DropwizardBootstrapConfig
                     Environment environment) throws ClassNotFoundException {
         final DBIFactory factory = new DBIFactory();
         final DBI jdbi = factory.build(environment, configuration.getDatabaseConfiguration(), "sqlite");
+        jdbi.registerMapper(new DefaultMapper());
+        jdbi.registerContainerFactory(new ImmutableListContainerFactory());
+        jdbi.registerContainerFactory(new ImmutableSetContainerFactory());
         final DropwizardBootstrapDAO dao = jdbi.onDemand(DropwizardBootstrapDAO.class);
         //dao.createSampleTable();
         dao.insertContent("santosh", "blah");
