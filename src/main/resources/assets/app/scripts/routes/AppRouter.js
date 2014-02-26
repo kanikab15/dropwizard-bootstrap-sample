@@ -13,7 +13,7 @@ define([
         },
 
         list: function() {
-            $('.container').append(view.render().el);
+            new view().render();
         }
 
     });

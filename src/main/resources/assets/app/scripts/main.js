@@ -25,12 +25,13 @@ require.config({
         bootstrap: '../bower_components/sass-bootstrap/dist/js/bootstrap',
         router: 'routes/AppRouter',
         models: 'models',
-        views: 'views'
+        views: 'views',
+        templates: 'templates'
     }
 });
 
 require([
-    'backbone','boostrap', 'router'
+    'backbone','bootstrap', 'router'
 ], function (Backbone, b, AppRouter) {
     var app = new AppRouter();
     Backbone.history.start();

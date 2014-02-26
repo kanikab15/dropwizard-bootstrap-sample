@@ -3,14 +3,14 @@
 define([
     'underscore',
     'backbone',
-    'models/ContentCollection'
-], function (_, Backbone, ContentcollectionModel) {
+    'models/Content'
+], function (_, Backbone, ContentModel) {
     'use strict';
 
-    var ContentcollectionCollection = Backbone.Collection.extend({
-        model: ContentcollectionModel,
+    var ContentCollection = Backbone.Collection.extend({
+        model: ContentModel,
         url : "service/"
     });
 
-    return ContentcollectionCollection;
+    return ContentCollection;
 });
